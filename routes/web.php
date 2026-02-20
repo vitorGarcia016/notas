@@ -1,10 +1,23 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\TestController;
+use App\Http\Middleware\CheckIsLogged;
+use App\Http\Middleware\CheckUserSesseion;
 use Illuminate\Support\Facades\Route;
 
 //Auth routes
-Route::get("/login", [MainController::class, 'login']);
-Route::post("/login_submit", [MainController::class, "loginSubmit"]);
-Route::get("/logout", [MainController::class, 'logout']);
+Route::middleware([CheckUserSesseion::class])->group(function(){
+    Route::get("/login", [AuthController::class, 'login']);
+    Route::post("/login_submit", [AuthController::class, "loginSubmit"]);
+
+});
+
+Route::middleware([CheckIsLogged::class])->group(function(){
+
+    Route::get("/", [MainController::class, "index"]);
+    Route::get("/new_notes", [MainController::class, "newNotes"]);
+    Route::get("/logout", [AuthController::class, 'logout']);
+});
+
