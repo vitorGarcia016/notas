@@ -16,7 +16,14 @@ class MainController extends Controller
 
     public function index(){
 
-        return view("home");
+        $userSession = session("user");
+
+        $username = $userSession["username"];
+
+
+        return view("home" , [
+            "username" => $username
+        ]);
 
     }
 

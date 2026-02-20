@@ -57,11 +57,7 @@ class AuthController extends Controller
         ]);
 
 
-        echo "login sucesso";
-        $sessao = session("user");
-        echo "<pre>";
-        print_r($sessao);
-        echo "<pre>";
+        return redirect(route("home"));
 
 
 
@@ -73,6 +69,6 @@ class AuthController extends Controller
     public function logout(){
        session()->forget("user");
 
-       return redirect()->to("/login");
+       return redirect()->to(route("logout"));
     }
 }
