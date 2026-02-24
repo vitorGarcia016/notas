@@ -17,13 +17,15 @@ class NotesTableSeeder extends Seeder
             "user_id" => 1,
             "title" => "Atividade de Matematica",
             "text" => "Fazer exercicio da pagina 3",
-            "created_at" => date("Y-m-d H:i:s")
+            "created_at" => date("Y-m-d H:i:s"),
+            "date_delivery" => date("Y-m-d", strtotime("2026-02-24"))
         ],
         [
             "user_id" => 1,
             "title" => "Atividade de Filosofia",
             "text" => "Fazer Mapa mental",
-            "created_at" => date("Y-m-d H:i:s")
+            "created_at" => date("Y-m-d H:i:s"),
+            "date_delivery" => date("Y-m-d", strtotime("2026-02-24"))
         ]]);
     }
 }

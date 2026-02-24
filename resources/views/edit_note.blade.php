@@ -9,7 +9,7 @@
                 <!-- label and cancel -->
                 <div class="row">
                     <div class="col">
-                        <p class="display-6 mb-0">Nova Nota</p>
+                        <p class="display-6 mb-0">Editar Nota</p>
                     </div>
                     <div class="col text-end">
                         <a href="{{ route('home') }}" class="btn btn-outline-danger">
@@ -19,27 +19,28 @@
                 </div>
 
                 <!-- form -->
-                <form action="{{ route('newNoteSubmit') }}" method="post">
+                <form action="{{ route('editNotesSubmit') }}" method="post">
                     @csrf
+                    <input type="hidden" name="note_id" value="{{ Crypt::encrypt($note->id) }}">
                     <div class="row mt-3">
                         <div class="col">
                             <div class="mb-3">
                                 <label class="form-label">Titulo</label>
-                                <input type="text" class="form-control bg-primary text-white" name="text_title" value="{{ old("text_title") }}" required>
+                                <input type="text" class="form-control bg-primary text-white" name="text_title" value="{{ old("text_title", $note->title) }}" required>
                                 @error("text_title")
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Texto</label>
-                                <textarea class="form-control bg-primary text-white" name="text_note" rows="5" required>{{ old("text_note") }}</textarea>
+                                <textarea class="form-control bg-primary text-white" name="text_note" rows="5" required>{{ old("text_note", $note->text) }}</textarea>
                                 @error("text_note")
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Data de entrega</label>
-                                <input type="date" class="form-control bg-primary text-white" name="date_delivery" value="{{ old("date_delivery") }}" required>
+                                <input type="date" class="form-control bg-primary text-white" name="date_delivery" value="{{ old("date_delivery", $note->date_delivery) }}" required>
                                 @error("date_delivery")
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -52,7 +53,7 @@
                             <a href="{{ route('home') }}" class="btn btn-primary px-5"><i
                                     class="fa-solid fa-ban me-2"></i>Cancelar</a>
                             <button type="submit" class="btn btn-secondary px-5"><i
-                                    class="fa-regular fa-circle-check me-2"></i>Salvar</button>
+                                    class="fa-regular fa-circle-check me-2"></i>Editar</button>
                         </div>
                     </div>
                 </form>
@@ -61,3 +62,4 @@
         </div>
     </div>
 @endsection
+

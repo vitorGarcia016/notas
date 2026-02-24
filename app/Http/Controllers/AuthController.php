@@ -13,7 +13,7 @@ class AuthController extends Controller
 
     public function loginSubmit(Request $request){
 
-       $request -> validate( 
+       $request -> validate(
         [
             "text_username" => "required|email",
             "text_password" => "required|min:4|max:10"
@@ -56,19 +56,12 @@ class AuthController extends Controller
             ]
         ]);
 
-
         return redirect(route("home"));
-
-
-
-
-
-
     }
 
     public function logout(){
        session()->forget("user");
 
-       return redirect()->to(route("logout"));
+       return redirect()->to(route("login"));
     }
 }

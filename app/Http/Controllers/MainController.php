@@ -21,71 +21,110 @@ class MainController extends Controller
     public function index(){
 
        $userSession = $this->getUserSession();
-       $user = User::find($userSession["id"])->toArray();
-       $notes = User::find($userSession["id"])->notes()->get()->toArray();
-
-
+       $notes = User::find($userSession["id"])->notes()->orderBy("date_delivery", "asc")->get()->toArray();
 
         return view("home" , [
-            "username" => $user["username"],
             "notes" => $notes
         ]);
 
     }
 
-
     public function newNote(){
 
-        $username = $this->getUserSession();
-
-        return view("new_note",["username" => $username["username"]]);
+        return view("new_note");
     }
 
     public function newNoteSubmit(Request $request){
 
         $request->validate([
-            "text_title" => "required",
-            "text_note" => "required"
+            "text_title" => "required|min:3|max:200",
+            "text_note" => "required|min:3|max:3000",
+            "date_delivery" => "required|date|after_or_equal:today"
         ],
         [
-            "text_title.required" => "O campo do titulo é obrigatorio",
-            "text_note.required" => "O campo do texto é obrigatorio"
+            "text_title.required" => "O campo do titulo é obrigatório",
+            "text_title.min" => "O titulo deve ter no minino :min caracteres",
+            "text_title.max" => "O titulo deve ter no maximo :max caracteres",
+
+            "text_note.required" => "O campo do texto é obrigatório",
+            "text_note.min" => "O texto deve ter no minimo :min caracteres",
+            "text_note.max" => "O texto deve ter no maximo :max caracteres",
+
+            "date_delivery.required" => "O campo data de entrega é obrigatório",
+            "date_delivery.date" => "Deve passar uma data valida",
+            "date_delivery.after_or_equal" => "Deve ser passado uma data no futuro"
         ]);
-
-        $titulo = $request->input("text_title");
-        $texto = $request->input("text_note");
-
-        $note = new Note();
 
         $userId = session("user.id");
 
-        $note->title = $titulo;
-        $note->text = $texto;
+        $note = new Note();
+        $note->title = $request->text_title;
+        $note->text = $request->text_note;
+        $note->date_delivery = $request->date_delivery;
         $note->user_id = $userId;
 
         $note->save();
 
         return redirect()->route("home");
-
     }
 
     public function editNote($id){
 
         $id = Operations::decryptId($id);
+        $note = Note::find($id);
+
+        return view("edit_note", [
+            "note" => $note
+        ]);
 
         }
+
+
+    public function editNoteSubmit(Request $request){
+
+        $request->validate([
+            "text_title" => "required|min:3|max:200",
+            "text_note" => "required|min:3|max:3000",
+            "date_delivery" => "required|date|after_or_equal:today"
+        ],
+        [
+            "text_title.required" => "O campo do titulo é obrigatório",
+            "text_title.min" => "O titulo deve ter no minino :min caracteres",
+            "text_title.max" => "O titulo deve ter no maximo :max caracteres",
+
+            "text_note.required" => "O campo do texto é obrigatório",
+            "text_note.min" => "O texto deve ter no minimo :min caracteres",
+            "text_note.max" => "O texto deve ter no maximo :max caracteres",
+
+            "date_delivery.required" => "O campo data de entrega é obrigatório",
+            "date_delivery.date" => "Deve passar uma data valida",
+            "date_delivery.after_or_equal" => "Deve ser passado uma data no futuro"
+        ]);
+
+
+        if($request->note_id == null){
+            return redirect()->route("home");
+        }
+
+        $noteId = Operations::decryptId($request->note_id);
+
+        $note = Note::find($noteId);
+
+        $note->title = $request->text_title;
+        $note->text = $request->text_note;
+        $note->date_delivery = $request->date_delivery;
+
+        $note->save();
+
+        return redirect()->route("home");
+    }
 
     public function deleteNote($id){
 
         $id =  Operations::decryptId($id);
     }
 
-
     private function getUserSession(){
         return session("user");
     }
-
-
-
-
 }

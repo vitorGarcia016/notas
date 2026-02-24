@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer("user_id");
             $table->string("title", 100)->nullable();
             $table->string("text", 3000)->nullable();
+            $table->date("date_delivery");
             $table->timestamps();
             $table->softDeletes();
         });

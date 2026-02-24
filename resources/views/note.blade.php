@@ -4,8 +4,11 @@
                             <div class="row">
                                 <div class="col">
                                     <h4 class="text-info">{{ $note["title"] }}</h4>
-                                    <small class="text-secondary"><span class="opacity-75 me-2">Created
-                                            at:</span><strong>{{date("Y-m-d H:i:s", strtotime($note["created_at"]))}}</strong></small>
+                                    <small class="text-secondary"><span class="opacity-75 me-2">Criado
+                                            em:</span><strong>{{date("d-m-Y", strtotime($note["created_at"]))}}</strong></small>
+                                    <small class="text-secondary"><span class="opacity-75 me-2">Data de
+                                            entrega:</span><strong>{{date("d-m-Y", strtotime($note["date_delivery"]))}}</strong></small>
+
                                 </div>
                                 <div class="col text-end">
                                     <a href="{{ route("editNotes", ["id" => Crypt::encrypt($note["id"])]) }}" class="btn btn-outline-secondary btn-sm mx-1"><i
