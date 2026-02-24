@@ -13,7 +13,7 @@ class AuthController extends Controller
 
     public function loginSubmit(Request $request){
 
-       $request -> validate(
+       $request -> validate( 
         [
             "text_username" => "required|email",
             "text_password" => "required|min:4|max:10"

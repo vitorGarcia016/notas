@@ -42,7 +42,31 @@ class MainController extends Controller
     }
 
     public function newNoteSubmit(Request $request){
-        
+
+        $request->validate([
+            "text_title" => "required",
+            "text_note" => "required"
+        ],
+        [
+            "text_title.required" => "O campo do titulo é obrigatorio",
+            "text_note.required" => "O campo do texto é obrigatorio"
+        ]);
+
+        $titulo = $request->input("text_title");
+        $texto = $request->input("text_note");
+
+        $note = new Note();
+
+        $userId = session("user.id");
+
+        $note->title = $titulo;
+        $note->text = $texto;
+        $note->user_id = $userId;
+
+        $note->save();
+
+        return redirect()->route("home");
+
     }
 
     public function editNote($id){
