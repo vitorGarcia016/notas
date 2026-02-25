@@ -84,6 +84,23 @@ class AuthController extends Controller
 
         $username = $request->text_username;
         $password = $request->text_password;
+
+        $userBD = User::where("username", $username)->where("deleted_at", null)->first();
+
+        if($userBD){
+            return redirect()
+                            ->back()
+                            ->withInput()
+                            ->with("CadastroError", "Usuario já existente");
+        }
+
+        $newUser = new User();
+        $newUser -> username = $username;
+        $newUser -> password = bcrypt($password);
+
+        $newUser -> save();
+
+        return redirect(route("login"));
     }
 
     public function logout(){

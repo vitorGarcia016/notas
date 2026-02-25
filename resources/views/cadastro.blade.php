@@ -37,9 +37,9 @@
                                 </div>
                             </form>
 
-                            @if (session('LoginError'))
+                            @if (session('CadastroError'))
                                 <div class="alert alert-danger text-c">
-                                    {{ session('LoginError') }}
+                                    {{ session('CadastroError') }}
                                 </div>
                             @endif
                         </div>
