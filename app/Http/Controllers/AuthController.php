@@ -59,6 +59,40 @@ class AuthController extends Controller
         return redirect(route("home"));
     }
 
+
+
+    public function cadastro(){
+        return view("cadastro");
+    }
+
+    public function cadastroSubmit(Request $request){
+
+        $request -> validate(
+        [
+            "text_username" => "required|email",
+            "text_password" => "required|min:4|max:10"
+        ],
+        [
+            "text_username.required" => "O campo username é obrigatório",
+            "text_username.email" => "Deve informar um email válido",
+            "text_password.required" => "O campo password é obrigatório",
+            "text_password.min" => "A password deve ter no minino :min caracteres",
+            "text_password.max" => "A password deve ter no maximo :max caracteres",
+
+        ]);
+
+
+        $username = $request->text_username;
+        $password = $request->text_password;
+
+        $userBd = User::where("username", $username)
+                        ->where("deleted_at", null)->first();
+
+        if($userBd)
+
+
+    }
+
     public function logout(){
        session()->forget("user");
 

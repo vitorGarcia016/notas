@@ -13,7 +13,7 @@
                     <!-- form -->
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-12">
-                            <form action="/login_submit" method="post">
+                            <form action="{{ route("cadastroSubmit") }}" method="post">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="text_username" class="form-label">Username</label>
@@ -33,10 +33,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <button type="submit" class="btn btn-secondary w-100">LOGIN</button>
-                                </div>
-                                <div class="mb-3">
-                                    <a href="{{ route('cadastro') }}" class="btn btn-secondary w-100">CADASTRO</a>
+                                    <button type="submit" class="btn btn-secondary w-100">CADASTRAR</button>
                                 </div>
                             </form>
 
