@@ -23,7 +23,7 @@ class AuthController extends Controller
             "text_username.email" => "Deve informar um email válido",
             "text_password.required" => "O campo password é obrigatório",
             "text_password.min" => "A password deve ter no minino :min caracteres",
-            "text_password.max" => "A password deve ter no maximo :max caracteres",
+            "text_password.max" => "A password deve ter no maximo :max caracteres"
 
         ]
        );
@@ -77,25 +77,18 @@ class AuthController extends Controller
             "text_username.email" => "Deve informar um email válido",
             "text_password.required" => "O campo password é obrigatório",
             "text_password.min" => "A password deve ter no minino :min caracteres",
-            "text_password.max" => "A password deve ter no maximo :max caracteres",
+            "text_password.max" => "A password deve ter no maximo :max caracteres"
 
         ]);
 
 
         $username = $request->text_username;
         $password = $request->text_password;
-
-        $userBd = User::where("username", $username)
-                        ->where("deleted_at", null)->first();
-
-        if($userBd)
-
-
     }
 
     public function logout(){
-       session()->forget("user");
+        session()->forget("user");
 
-       return redirect()->to(route("login"));
+        return redirect()->to(route("login"));
     }
 }
