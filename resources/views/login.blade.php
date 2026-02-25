@@ -48,7 +48,7 @@
 
                 <!-- copy -->
                 <div class="text-center text-secondary mt-3">
-                    <small>&copy; <?= date('Y') ?> Notes</small>
+                    <small>&copy; {{ date("Y") }} Notes</small>
                 </div>
 
             </div>

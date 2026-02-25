@@ -21,7 +21,12 @@ class MainController extends Controller
     public function index(){
 
        $userSession = $this->getUserSession();
-       $notes = User::find($userSession["id"])->notes()->orderBy("date_delivery", "asc")->where("deleted_at", null)->get()->toArray();
+       $notes = User::find($userSession["id"])
+                                                ->notes()
+                                                ->orderBy("date_delivery", "asc")
+                                                ->where("deleted_at", null)
+                                                ->get()
+                                                ->toArray();
 
         return view("home" , [
             "notes" => $notes
@@ -134,8 +139,7 @@ class MainController extends Controller
 
         $note = Note::find($id);
 
-        $note->deleted_at = date("Y-m-d H:i:s");
-        $note->save();
+        $note->delete();
 
         return redirect()->route("home");
 
